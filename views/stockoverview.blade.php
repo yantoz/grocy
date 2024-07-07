@@ -196,6 +196,7 @@
 				<tr id="product-{{ $currentStockEntry->product_id }}-row"
 					class="@if(GROCY_FEATURE_FLAG_STOCK_BEST_BEFORE_DATE_TRACKING && $currentStockEntry->best_before_date < date('Y-m-d 23:59:59', strtotime('-1 days')) && $currentStockEntry->amount > 0) @if($currentStockEntry->due_type == 1) table-secondary @else table-danger @endif @elseif(GROCY_FEATURE_FLAG_STOCK_BEST_BEFORE_DATE_TRACKING && $currentStockEntry->best_before_date < date('Y-m-d 23:59:59', strtotime('+' . $nextXDays . ' days')) && $currentStockEntry->amount > 0) table-warning @elseif ($currentStockEntry->product_missing) table-info @endif">
 					<td class="fit-content border-right">
+					@if(GROCY_FEATURE_FLAG_STOCK_QUICK_CONSUME)
 						<a class="permission-STOCK_CONSUME btn btn-success btn-sm product-consume-button @if($currentStockEntry->amount_aggregated < $currentStockEntry->quick_consume_amount || $currentStockEntry->enable_tare_weight_handling == 1) disabled @endif"
 							href="#"
 							data-toggle="tooltip"
@@ -220,7 +221,8 @@
 							data-original-total-stock-amount="{{$currentStockEntry->amount}}">
 							<i class="fa-solid fa-utensils"></i> {{ $__t('All') }}
 						</a>
-						@if(GROCY_FEATURE_FLAG_STOCK_PRODUCT_OPENED_TRACKING)
+						@endif
+						@if(GROCY_FEATURE_FLAG_STOCK_QUICK_OPEN && GROCY_FEATURE_FLAG_STOCK_PRODUCT_OPENED_TRACKING)
 						<a class="btn btn-success btn-sm product-open-button @if($currentStockEntry->amount_aggregated < $currentStockEntry->quick_open_amount || $currentStockEntry->amount_aggregated == $currentStockEntry->amount_opened_aggregated || $currentStockEntry->enable_tare_weight_handling == 1) disabled @endif"
 							href="#"
 							data-toggle="tooltip"

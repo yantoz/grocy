@@ -106,6 +106,7 @@
 					&&
 					$stockEntry->amount > 0) table-warning @endif">
 					<td class="fit-content border-right">
+						@if(GROCY_FEATURE_FLAG_STOCK_QUICK_CONSUME)
 						<a class="btn btn-danger btn-sm stock-consume-button"
 							href="#"
 							data-toggle="tooltip"
@@ -120,6 +121,7 @@
 							data-consume-amount="{{ $stockEntry->amount }}">
 							<i class="fa-solid fa-utensils"></i>
 						</a>
+						@endif
 						@if(GROCY_FEATURE_FLAG_STOCK_PRODUCT_OPENED_TRACKING)
 						<a class="btn btn-success btn-sm product-open-button @if($stockEntry->open == 1 || FindObjectInArrayByPropertyValue($products, 'id', $stockEntry->product_id)->enable_tare_weight_handling == 1) disabled @endif"
 							href="#"
